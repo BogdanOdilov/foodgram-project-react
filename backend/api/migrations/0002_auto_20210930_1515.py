@@ -14,13 +14,13 @@ class Migration(migrations.Migration):
         migrations.AlterModelOptions(
             name='ingredient',
             options={'ordering': ['-id'],
-            'verbose_name': 'Ингредиент',
-            'verbose_name_plural': 'Ингредиенты'},
+                     'verbose_name': 'Ингредиент',
+                    'verbose_name_plural': 'Ингредиенты'},
         ),
         migrations.AlterModelOptions(
             name='ingredientamount',
             options={'ordering': ['-id'],
-            'verbose_name': 'Количество ингридиента',
+                'verbose_name': 'Количество ингридиента',
             'verbose_name_plural': 'Количество ингридиентов'},
         ),
         migrations.AlterModelOptions(
