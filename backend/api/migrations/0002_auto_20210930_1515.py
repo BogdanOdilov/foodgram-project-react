@@ -15,25 +15,25 @@ class Migration(migrations.Migration):
             name='ingredient',
             options={'ordering': ['-id'],
                      'verbose_name': 'Ингредиент',
-                    'verbose_name_plural': 'Ингредиенты'},
+                     'verbose_name_plural': 'Ингредиенты'},
         ),
         migrations.AlterModelOptions(
             name='ingredientamount',
             options={'ordering': ['-id'],
-                'verbose_name': 'Количество ингридиента',
-            'verbose_name_plural': 'Количество ингридиентов'},
+                     'verbose_name': 'Количество ингридиента',
+                     'verbose_name_plural': 'Количество ингридиентов'},
         ),
         migrations.AlterModelOptions(
             name='recipe',
             options={'ordering': ['-id'],
-            'verbose_name': 'Рецепт',
-            'verbose_name_plural': 'Рецепты'},
+                     'verbose_name': 'Рецепт',
+                     'verbose_name_plural': 'Рецепты'},
         ),
         migrations.AlterModelOptions(
             name='tag',
             options={'ordering': ['-id'],
-            'verbose_name': 'Тег',
-            'verbose_name_plural': 'Теги'},
+                     'verbose_name': 'Тег',
+                     'verbose_name_plural': 'Теги'},
         ),
         migrations.AlterField(
             model_name='ingredientamount',
@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
             field=models.PositiveSmallIntegerField(
                 validators=[django.core.validators.MinValueValidator(
                     1, message='Минимальное количество ингридиентов 1')],
-                    verbose_name='Количество'),
+                verbose_name='Количество'),
         ),
         migrations.AlterField(
             model_name='recipe',
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
             field=models.PositiveSmallIntegerField(
                 validators=[django.core.validators.MinValueValidator(
                     1, message='Минимальное время приготовления 1 минута')],
-                    verbose_name='Время приготовления'),
+                        verbose_name='Время приготовления'),
         ),
         migrations.AddConstraint(
             model_name='cart',
