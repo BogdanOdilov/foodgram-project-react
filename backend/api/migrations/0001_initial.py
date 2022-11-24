@@ -61,18 +61,19 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(
                     auto_created=True,
-                    primary_key=True,serialize=False,
+                    primary_key=True,
+                    serialize=False,
                     verbose_name='ID')),
                 ('name', models.CharField(
                     max_length=200,
                     unique=True,
                     verbose_name='Название тега')),
                 ('color', models.CharField(
-                    choices=[('#0000FF', 'Синий'),
-                    ('#FFA500', 'Оранжевый'),
-                    ('#008000', 'Зеленый'),
-                    ('#800080', 'Фиолетовый'),
-                    ('#FFFF00', 'Желтый')],
+                    choices=[('#0000FF', 'Синий'), 
+                             ('#FFA500', 'Оранжевый'),
+                             ('#008000', 'Зеленый'),
+                             ('#800080', 'Фиолетовый'),
+                             ('#FFFF00', 'Желтый')],
                     max_length=7,
                     unique=True,
                     verbose_name='Цвет в HEX')),
