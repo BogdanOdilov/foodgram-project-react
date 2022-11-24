@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
                     unique=True,
                     verbose_name='Название тега')),
                 ('color', models.CharField(
-                    choices=[('#0000FF', 'Синий'), 
+                    choices=[('#0000FF', 'Синий'),
                              ('#FFA500', 'Оранжевый'),
                              ('#008000', 'Зеленый'),
                              ('#800080', 'Фиолетовый'),
@@ -114,7 +114,9 @@ class Migration(migrations.Migration):
                     through='api.IngredientAmount',
                     to='api.Ingredient',
                     verbose_name='Ингридиенты')),
-                ('tags', models.ManyToManyField(to='api.Tag', verbose_name='Теги')),
+                ('tags', models.ManyToManyField(
+                    to='api.Tag',
+                    verbose_name='Теги')),
             ],
         ),
         migrations.AddField(
