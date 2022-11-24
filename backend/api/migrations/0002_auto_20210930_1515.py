@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
             field=models.PositiveSmallIntegerField(
                 validators=[django.core.validators.MinValueValidator(
                     1, message='Минимальное время приготовления 1 минута')],
-                        verbose_name='Время приготовления'),
+                verbose_name='Время приготовления'),
         ),
         migrations.AddConstraint(
             model_name='cart',
