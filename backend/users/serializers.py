@@ -1,43 +1,43 @@
-from django.contrib.auth import get_user_model
-from djoser.serializers import UserCreateSerializer, UserSerializer
-from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
+from django.contrib.auth.hashers import make_password
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-from users.models import Follow
-
-User = get_user_model()
+from recipes.serializers.nested import RecipeShortReadSerializer
+from .models import User
 
 
-class CustomUserCreateSerializer(UserCreateSerializer):
-    email = serializers.EmailField(
-        validators=[UniqueValidator(queryset=User.objects.all())])
-    username = serializers.CharField(
-        validators=[UniqueValidator(queryset=User.objects.all())])
+class UserSerializer(ModelSerializer):
+    is_subscribed = SerializerMethodField('is_subscribed_user')
 
     class Meta:
         model = User
         fields = (
-            'email', 'id', 'password', 'username', 'first_name', 'last_name')
+            'id', 'email', 'username', 'first_name', 'last_name', 'password',
+            'is_subscribed',
+        )
         extra_kwargs = {
-            'email': {'required': True},
-            'username': {'required': True},
-            'password': {'required': True},
-            'first_name': {'required': True},
-            'last_name': {'required': True},
+            'password': {'write_only': True, 'required': True},
         }
 
+    def is_subscribed_user(self, obj):
+        user = self.context['request'].user
+        return (
+            user.is_authenticated
+            and obj.subscribing.filter(user=user).exists()
+        )
 
-class CustomUserSerializer(UserSerializer):
-    is_subscribed = serializers.SerializerMethodField()
+    def create(self, validated_data):
+        validated_data['password'] = (
+            make_password(validated_data.pop('password'))
+        )
+        return super().create(validated_data)
 
-    class Meta:
-        model = User
-        fields = (
-            'email', 'id', 'username', 'first_name', 'last_name',
-            'is_subscribed')
 
-    def get_is_subscribed(self, obj):
-        user = self.context.get('request').user
-        if user.is_anonymous:
-            return False
-        return Follow.objects.filter(user=user, author=obj.id).exists()
+class SubscriptionSerializer(UserSerializer):
+    recipes = RecipeShortReadSerializer(many=True)
+    recipes_count = SerializerMethodField()
+
+    class Meta(UserSerializer.Meta):
+        fields = UserSerializer.Meta.fields + ('recipes', 'recipes_count',)
+
+    def get_recipes_count(self, obj):
+        return obj.recipes.count()
